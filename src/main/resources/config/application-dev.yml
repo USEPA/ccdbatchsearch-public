@@ -1,0 +1,66 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# ===================================================================
+
+spring:
+  application:
+    name: batchsearch
+#  profiles:
+#    active: dev
+  jackson:
+    serialization:
+      indent-output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: ${CCD_URL}
+    username: ${CCD_USER}
+    password: ${CCD_PASSWORD}
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.default_schema: ccd_app
+# Logging
+logging:
+  level:
+    com.zaxxer.hikari.HikariConfig: info
+    org.hibernate.SQL: info
+    org.hibernate.stat: info
+    gov.epa.ccte.api.*: info
+    org.springframework: warn
+# to rebuild app
+# server
+server:
+  servlet:
+    context-path: /
+  #port: 9300
+
+application:
+  api-url: https://api-ccte-stg.epa.gov/chemical/list/chemicals/search/by-dtxsid
+  api-ghsurl: https://api-ccte-stg.epa.gov/chemical/ghslink/to-dtxsid/
+  apikey: 546aa80b-f05c-4126-a303-18dd66eabb9d
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+# multiple datasources
+#app:
+#  datasource:
+#    pgsql:
+#      type: com.zaxxer.hikari.HikariDataSource
+#      url: jdbc:postgresql://ccte-pgsql-dev.epa.gov:5432/dev_datahub
+#      username: app_ccd
+#      password: 2peM?Mu9MNpm5v!?
